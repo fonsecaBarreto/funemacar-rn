@@ -10,7 +10,7 @@ export const Container = styled.TouchableOpacity`
     border-radius: 8px;
     margin-bottom: 6px;
 `
-export const ContentPanel = styled.TouchableOpacity`
+export const ContentPanel = styled.View`
     width: 100%;
     flex: 1;
     flex-direction: row;
@@ -21,6 +21,7 @@ export const LocationIcon = styled.View`
     border-radius: 32px;
     border: solid 5px #ddd
 `
+
 export const LocationText = styled.Text`
     font-size: 16px;
     padding-left: 8px;
@@ -32,4 +33,13 @@ export const PriceText = styled.Text`
 ` 
 export const Image = styled.ImageBackground`
     width: 64px; height: 64px; margin-right: 12px;
+`
+
+export const HiddenBody = styled.TouchableOpacity`
+    width: 100%;
+    border: solid 1px #ddd;
+    background-color: #fefefe;
+    box-shadow: 0px 2px #0003;
+    flex-direction: column;
+    border-radius: 6px;
 `

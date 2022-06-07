@@ -1,17 +1,4 @@
-export interface User {
-    id: string,
-    name: string,
-    email: string,
-    price: number,
-    phone: string
-    password: string
-}
 
-export interface Address {
-    google_id: string
-    cep: string
-    label: string
-}
 
 export enum RideStatus {
     OPEN = "OPEN",
@@ -19,7 +6,7 @@ export enum RideStatus {
     CLOSED = "CLOSED",
 }
 
-export interface Ride{
+export interface RideEntity{
     id: string,
     driver_id: string, 
     seats: number,
@@ -29,3 +16,13 @@ export interface Ride{
     date: Date,
     status: RideStatus
 }
+
+/* users rides */
+export interface UsersRide {
+    user_id: string
+    ride_id: string,
+    from: string,
+    to: string,
+    accepted: boolean
+}
+

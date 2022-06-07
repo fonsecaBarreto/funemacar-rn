@@ -10,6 +10,7 @@ import ControlWrapper from '@/components/controls/Wrapper';
 import TextInputControl from '@/components/controls/TextInput';
 import { stationsService } from '@/services/api/stations-service';
 import { DatePicker } from '@/components/controls/DatePicker';
+import { useIsFocused } from '@react-navigation/native';
 
 export namespace NewRideModal {
   export type Params = { navigation: any }
@@ -19,8 +20,8 @@ const today = new Date(Date.now())
 const INTIAL_DATA = {
   seats: 1,
   price: 0,
-  from: "",
-  to:"",
+  from: "Rua Santa Marta 1072",
+  to:"FEMASS",
   date: today
 }
 
@@ -29,6 +30,19 @@ export const NewRideScreen: React.FunctionComponent<NewRideModal.Params> = ({nav
   const dispatch = useDispatch();
   const { user } = useSelector((state:any)=>state.main)
   const inputsState = InputsHandler(INTIAL_DATA);
+
+
+  const isFocused = useIsFocused();
+
+  React.useEffect(()=>{
+    if(isFocused == true){
+        if(!user) {
+          navigation.navigate("Modal")
+        }
+    }
+  },[isFocused]) 
+
+
 
   const onChangeText = (name: string, value: string, format:string = "text") =>{
       inputsState.handleInputs({[name]: value})
@@ -41,9 +55,8 @@ export const NewRideScreen: React.FunctionComponent<NewRideModal.Params> = ({nav
           driver_id: user.id
       }
       RidesServices.save(dto)
-      .then(result=>{navigation.navigate("Home")})
-      .finally(()=>dispatch(setLoading(false)))
-
+        .then(result=>{navigation.navigate("Home")})
+        .finally(()=>dispatch(setLoading(false)))
   }
 
   const datePickerChange = (value: any) => {
@@ -94,8 +107,6 @@ export const NewRideScreen: React.FunctionComponent<NewRideModal.Params> = ({nav
               </ControlWrapper>
 
               <Button title="Confirmar " onPress={submit}/>
-
-              <Text> {JSON.stringify(inputsState.data)}</Text>
   
           </View> 
       </View>

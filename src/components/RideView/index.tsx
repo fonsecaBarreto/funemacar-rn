@@ -1,21 +1,44 @@
 import React, { useEffect, useState } from 'react'
-import { Container, ContentPanel, LocationIcon, LocationText, PriceText, Image } from './style'
-import { Text, StyleSheet, View} from "react-native"
+import { Container, ContentPanel, LocationIcon, LocationText, PriceText, Image, HiddenBody } from './style'
+import { Text, StyleSheet, View, Button } from "react-native"
 import { FlexCenter, FlexColumn, FlexRow } from 'components/Themed'
 import UserImage from "@assets/images/icons/user.png"
+import { Rides_Services } from '@/services/api/Rides'
+import PassagerItem from './Passager'
 export namespace RideMuralItem {
     export type Params = {
-        entry?: { data?: any, index: number }
+        entry?: { data?: Rides_Services.List_Rides_DTO, index: number }
         onPress: any
     }
 }
 
 export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ entry, ...rest }) =>{
+
     const { data, index }: any = entry;
+    const [ passagers, setPassagers ] = useState<any>([])
+    const [ expand, setExpand ] = useState(true)
+
+    /*   if(data.passagers && data.passagers.length > 0){
+        setPassagers
+    } */
+
+    useEffect(()=>{
+
+        const { seats } = data;
+
+        let result = [...new Array(seats)].map((b,i)=> {
+
+            return  data.passagers[i] ? ({ ...data.passagers[i] }) : null
+
+        });
+
+        setPassagers(result)
+
+    },[data])
 
     if(!data) return <Text> Carregando... </Text>
     return (
-        <Container {...rest}>
+        <Container {...rest } onPress={ () => setExpand(prev=>!prev) } >
             <CPanel left={
                 <React.Fragment>
                     <FlexRow>
@@ -32,6 +55,7 @@ export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ e
                     <PriceText>
                         R$: {data.price}
                     </PriceText> 
+                    
                 </FlexRow>
             }/>
 
@@ -39,8 +63,8 @@ export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ e
                  <FlexRow>
                         <Image source={UserImage}></Image>
                     <FlexColumn>
-                        <Text> Nome do usuario </Text>
-                        <Text> avaliação do usuario </Text>
+                        <Text> {data.driver.name} </Text>
+                        <Text> {data.driver.phone} </Text>
                     </FlexColumn>
                 </FlexRow>
             }
@@ -49,6 +73,13 @@ export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ e
                     <Text> Vagas: { data.seats} </Text>
                 </FlexRow> 
             }/>
+            { expand === true && <HiddenBody>
+                {
+                    passagers.length > 0 && passagers.map((b: any, i: number)=>{
+                        return <PassagerItem key={i} onPress={()=>{}} entry={{ index:i, data:b }} />
+                    })
+                }
+            </HiddenBody> }
         </Container>
     )
 }

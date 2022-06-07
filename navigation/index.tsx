@@ -46,11 +46,12 @@ function RootNavigator() {
   );
 }
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    <BottomTab.Navigator initialRouteName="NewRide"
+    <BottomTab.Navigator initialRouteName="Home"
       screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}>
         
       <BottomTab.Screen
@@ -70,6 +71,7 @@ function BottomTabNavigator() {
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
+
             </Pressable>
           )
         })}
@@ -81,15 +83,6 @@ function BottomTabNavigator() {
           tabBarShowLabel: false,
           title: 'Nova Carona',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={NewRide}
-        options={{
-          tabBarShowLabel: false,
-          title: 'Nova Carona',
-          tabBarIcon: ({ color }) => <TabBarIcon name="inbox" color={color} />,
         }}
       />
     </BottomTab.Navigator>

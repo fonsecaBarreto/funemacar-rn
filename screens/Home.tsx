@@ -12,6 +12,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   const { user } = useSelector((state: any)=>state.main)
   const [ loadTry, setLoadTry ] = useState(0)
   const [ rides, setRides ] = useState<any[]>([])
+  const [ metaData, setMetaData ] = useState(null)
 
   const isFocused = useIsFocused();
 
@@ -19,7 +20,10 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
     if(isFocused == true){
       setLoadTry(0)
       RidesServices.list()
-        .then(setRides)
+        .then((r)=>{ 
+          setRides(r.records)
+          setMetaData(r._metadata)
+        })
         .finally(()=>setLoadTry(1))
     }
   },[isFocused]) 

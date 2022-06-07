@@ -1,32 +1,44 @@
-import { Ride, RideStatus } from "../domain/Classes"
+import { RideEntity } from '../classes/Rides'
+import { global } from '../global-keys'
+import { MakeApiSettings } from './helpers/ApiFactory'
 
-export namespace RidesServices {
-    export interface Add_Ride_DTO extends Omit<Ride, 'id'> {}
-}
+const ridesApi = MakeApiSettings({
+    base_url: `${global.base_url}/rides`,
+    storage_key: global.user_storage_key
+})
 
-const rides: Ride[] = [ 
-    {
-        id: "test_id",
-        seats: 8,
-        from: "Rua Araujo Silva, 69",
-        to:"FUNEMAC - Macape",
-        driver_id: "some_user_id",
-        date: new Date(),
-        price: 8,
-        status: RideStatus.OPEN
+export namespace Rides_Services {
+    export type Driver_Dto = {    
+        id: string,
+        name: string
+        phone: string
     }
-]
-
-export const RidesServices =  {
-    list: async() =>{
-        await new Promise((re)=>{setTimeout(()=>re(true),100)})
-        return rides
-    },
-    find: async (id: string) =>{
-        return rides.find((p)=>p.id == id)
-    },
-    save: async (newRide: RidesServices.Add_Ride_DTO) =>{
-        rides.push({id: "some_user_id", ...newRide})
-        return Promise.resolve()
-    },
+    export type Passager = {
+        from: string,
+        to: string,
+        accepted: boolean,
+        user_id: string,
+    }
+    export interface Add_Ride_DTO extends Omit<RideEntity, 'id' | 'status'> {}
+    export interface List_Rides_DTO extends RideEntity { 
+        driver: Driver_Dto 
+        passagers: Passager[] 
+    }
 }
+
+export const RidesServices = {
+
+    list: async() =>{
+        const result = await ridesApi.send({ method: "get", url:"/" }) 
+        return result.data;
+    },
+
+    save: async (newRide: Rides_Services.Add_Ride_DTO) =>{
+        await ridesApi.send({ method: "post", url:"/", data: newRide }) 
+        return;
+    }
+}
+
+
+
+
