@@ -16,7 +16,7 @@ export const PassagerItem: React.FunctionComponent<RideMuralItem.Params> = ({ en
         <View {...rest } style={styles.container} >
             {
                 data ?
-                <Text> { data.user_id } </Text>
+                <Text> { data.user.name } </Text>
                 :
                 <FlexRow>
                     <Text> Vaga </Text>

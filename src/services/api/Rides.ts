@@ -1,4 +1,4 @@
-import { RideEntity } from '../classes/Rides'
+import { RideEntity, UsersRide } from '../classes/Rides'
 import { global } from '../global-keys'
 import { MakeApiSettings } from './helpers/ApiFactory'
 
@@ -13,12 +13,14 @@ export namespace Rides_Services {
         name: string
         phone: string
     }
-    export type Passager = {
-        from: string,
-        to: string,
-        accepted: boolean,
-        user_id: string,
+
+    export interface Passager extends UsersRide {
+        user: {
+            name: string,
+            phone: string
+        }
     }
+
     export interface Add_Ride_DTO extends Omit<RideEntity, 'id' | 'status'> {}
     export interface List_Rides_DTO extends RideEntity { 
         driver: Driver_Dto 

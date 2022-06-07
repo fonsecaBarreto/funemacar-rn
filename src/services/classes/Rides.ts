@@ -19,6 +19,7 @@ export interface RideEntity{
 
 /* users rides */
 export interface UsersRide {
+    id: string,
     user_id: string
     ride_id: string,
     from: string,
