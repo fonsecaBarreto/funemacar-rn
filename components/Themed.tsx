@@ -1,9 +1,4 @@
-/**
- * Learn more about Light and Dark modes:
- * https://docs.expo.io/guides/color-schemes/
- */
-
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { Text as DefaultText, View as DefaultView, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -43,3 +38,36 @@ export function View(props: ViewProps) {
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
+
+export function FlexColumn(props: DefaultView['props'] ){
+  return <DefaultView {...props} style={styles.flexColumn}/>
+}
+export function FlexRow(props: DefaultView['props'] ){
+  return <DefaultView {...props} style={styles.flexRow}/>
+}
+export function FlexCenter(props: DefaultView['props'] ){
+  return <DefaultView {...props} style={styles.flexCenter}/>
+}
+
+export const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    border: "solid 1px red"
+  },
+  flexColumn: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    border: "solid 1px red"
+  },
+  flexCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fill: 1,
+    width: "100%",
+    height: "100%"
+  }
+});
