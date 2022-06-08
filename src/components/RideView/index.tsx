@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Container, ContentPanel, LocationIcon, LocationText, PriceText, Image, HiddenBody } from './style'
-import { Text, StyleSheet, View, Button } from "react-native"
+import { Text, StyleSheet, View, Button, TouchableOpacity } from "react-native"
 import { FlexCenter, FlexColumn, FlexRow } from 'components/Themed'
 import UserImage from "@assets/images/icons/user.png"
 import { Rides_Services } from '@/services/api/Rides'
 import PassagerItem from './Passager'
+import { FontAwesome } from '@expo/vector-icons'
 export namespace RideMuralItem {
     export type Params = {
         entry?: { data?: Rides_Services.List_Rides_DTO, index: number }
@@ -16,37 +17,31 @@ export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ e
 
     const { data, index }: any = entry;
     const [ passagers, setPassagers ] = useState<any>([])
-    const [ expand, setExpand ] = useState(true)
-
-    /*   if(data.passagers && data.passagers.length > 0){
-        setPassagers
-    } */
+    const [ expand, setExpand ] = useState(false)
 
     useEffect(()=>{
-
         const { seats } = data;
-
         let result = [...new Array(seats)].map((b,i)=> {
-
             return  data.passagers[i] ? ({ ...data.passagers[i] }) : null
-
         });
-
         setPassagers(result)
-
     },[data])
 
     if(!data) return <Text> Carregando... </Text>
     return (
-        <Container {...rest } onPress={ () => setExpand(prev=>!prev) } >
+        <Container {...rest } >
             <CPanel left={
                 <React.Fragment>
                     <FlexRow>
-                        <LocationIcon></LocationIcon>
+                        <LocationIcon>
+                            <FontAwesome name="map-pin" size={20}/>
+                        </LocationIcon>
                         <LocationText> {data.from}  </LocationText>
                     </FlexRow>
                     <FlexRow>
-                        <LocationIcon></LocationIcon>
+                        <LocationIcon>
+                            <FontAwesome name="map-marker" size={20}/>
+                        </LocationIcon>
                         <LocationText> { data.to }  </LocationText>
                     </FlexRow>
                 </React.Fragment>
@@ -70,7 +65,9 @@ export const RideMuralItem: React.FunctionComponent<RideMuralItem.Params> = ({ e
             }
             right={
                 <FlexRow>
-                    <Text> Vagas: { data.seats} </Text>
+                    <TouchableOpacity onPress={ () => setExpand(prev=>!prev) }>
+                        <Text> Vagas: { data.seats} </Text>
+                    </TouchableOpacity>
                 </FlexRow> 
             }/>
             { expand === true && <HiddenBody>
@@ -101,7 +98,7 @@ const styles = StyleSheet.create({
     left: {
         width: "70%", height: "100%",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "center"
     }, 
     right: {
         width: "30%",
