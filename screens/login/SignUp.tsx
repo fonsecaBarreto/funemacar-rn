@@ -5,10 +5,10 @@ import { LoginServices } from '@/services/api/Login';
 import { setUser } from '@/store/reducers/main';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Platform, StyleSheet, Button, Image } from 'react-native';
+import { Platform, StyleSheet, Button, Image, View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, View  } from '../../components/Themed';
 import LogoImage from "@assets/images/icons/logo.png"
+import LoginButton from './components/LoginButton';
 const INTIAL_DATA = {
   phone: "",
   password: "",
@@ -65,9 +65,13 @@ export const ModalScreen:React.FunctionComponent<any> = ({navigation}) => {
               onChangeText={(v:string)=>onChangeText('password', v)}
           />
       </ControlWrapper>
+
+
+      <LoginButton label="Cadastrar-se" onPress={submit}/>
+      <LoginButton label="Entrar" type="light" onPress={()=>navigation.navigate("SignIn")}/>
+
   
-      <Button title="Cadastrar-se" onPress={submit}> </Button>
-      <Button title="Entrar" onPress={()=>navigation.navigate("SignIn")}> </Button>
+
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );

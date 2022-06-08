@@ -4,11 +4,10 @@ import InputsHandler from '@/components/controls/InputsHandler';
 import { Button, StyleSheet, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '@/store/reducers/main';
-import { RidesServices } from '@/services/api/Rides';
+import { RidesServices, Rides_Services } from '@/services/api/Rides';
 import { View } from 'components/Themed';
 import ControlWrapper from '@/components/controls/Wrapper';
 import TextInputControl from '@/components/controls/TextInput';
-import { stationsService } from '@/services/api/stations-service';
 import { DatePicker } from '@/components/controls/DatePicker';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -50,7 +49,7 @@ export const NewRideScreen: React.FunctionComponent<NewRideModal.Params> = ({nav
   
   const submit = async () =>{
       dispatch(setLoading(true))
-      const dto: RidesServices.Add_Ride_DTO ={
+      const dto: Rides_Services.Add_Ride_DTO ={
           ...inputsState.data,
           driver_id: user.id
       }

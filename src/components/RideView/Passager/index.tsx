@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons'
 import { FlexCenter, FlexRow } from 'components/Themed'
 import React, { useEffect, useState } from 'react'
 import { Text, StyleSheet, View, Button } from "react-native"
@@ -6,17 +7,13 @@ import { useSelector } from 'react-redux'
 export namespace PassagerItem {
     export type Params = {
         entry?: { data: any, index: number }
-        onPress: any
+        onChange: any
     }
 }
 
-export const PassagerItem: React.FunctionComponent<PassagerItem.Params> = ({ entry, onPress }) =>{
+export const PassagerItem: React.FunctionComponent<PassagerItem.Params> = ({ entry, onChange }) =>{
     const { user } = useSelector((state:any)=>state.main)
     const { data, index }: any = entry;
-
-    const handleChange = () =>{
-        console.log("request here the passage to user: ", user.id)
-    }
 
     return (
         <View style={styles.container} >
@@ -28,8 +25,9 @@ export const PassagerItem: React.FunctionComponent<PassagerItem.Params> = ({ ent
                 </FlexRow>
                 :
                 <FlexRow>
+                    <FontAwesome name="user"></FontAwesome>
                     <Text> Vaga </Text>
-                    <Button title="reservar" onPress={handleChange}/>
+                    <Button title="reservar" onPress={onChange}/>
                 </FlexRow>
             }
         </View>
@@ -41,7 +39,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#eee",
         marginBottom: 2,
         height:42
-    }
+    },
 });
 
 export default PassagerItem

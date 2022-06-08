@@ -38,7 +38,15 @@ export const RidesServices = {
     save: async (newRide: Rides_Services.Add_Ride_DTO) =>{
         await ridesApi.send({ method: "post", url:"/", data: newRide }) 
         return;
+    },
+
+    requestRide: async (params: {to: string, from: string, ride_id:string })=>{
+        const { to, from, ride_id } = params
+        await ridesApi.send({ method: "post", url:`/${ride_id}/request`, data: { to, from } }) 
+        return;
     }
+
+
 }
 
 

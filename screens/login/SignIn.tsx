@@ -9,6 +9,8 @@ import { Platform, StyleSheet, Button, View, Text, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoImage from "@assets/images/icons/logo.png"
 
+import LoginButton from "./components/LoginButton"
+
 const INTIAL_DATA = {
   phone: "22997836256",
   password: "123456",
@@ -55,8 +57,9 @@ export const ModalScreen:React.FunctionComponent<any> = ({navigation}) => {
             />
         </ControlWrapper>
   
-      <Button title="Entrar" onPress={submit}> </Button>
-      <Button title="Cadastrar-se" onPress={()=>navigation.navigate("SignUp")}> </Button>
+      <LoginButton label="Entrar" onPress={submit}> </LoginButton>
+      <LoginButton label="Cadastrar-se" type="light" onPress={()=>navigation.navigate("SignUp")}> </LoginButton>
+
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );

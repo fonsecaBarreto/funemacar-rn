@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TestScreen from 'screens/modals/Test';
 import { LoginServices } from '@/services/api/Login';
 import { setUser } from '@/store/reducers/main';
+import MyRidesScreen from 'screens/MyRides';
 
 const LoginStack = createNativeStackNavigator<LoginStackParamList>();
 
@@ -89,6 +90,8 @@ function BottomTabNavigator({ navigation }: any) {
         options={({ navigation }) => ({ title: 'Caronas para hoje', tabBarIcon: ({ color }) => <TabBarIcon name="car" color={color} />, tabBarShowLabel: false,})}/>
       
       <BottomTab.Screen name="NewRide" component={NewRide} options={{ tabBarShowLabel: false, title: 'Nova Carona', tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />}}/>
+      
+      <BottomTab.Screen name="MyRides" component={MyRidesScreen} options={{ tabBarShowLabel: false, title: 'Minhas Caronas', tabBarIcon: ({ color }) => <TabBarIcon name="inbox" color={color} />}}/>
       
     </BottomTab.Navigator>
   );
