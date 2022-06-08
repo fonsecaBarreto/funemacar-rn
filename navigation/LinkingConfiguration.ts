@@ -1,15 +1,10 @@
-/**
- * Learn more about deep linking with React Navigation
- * https://reactnavigation.org/docs/deep-linking
- * https://reactnavigation.org/docs/configuring-links
- */
 
 import { LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { LoginStackParamList, RootStackParamList } from '../types';
 
-const linking: LinkingOptions<RootStackParamList> = {
+export const RootLinking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.makeUrl('/')],
   config: {
     screens: {
@@ -33,4 +28,14 @@ const linking: LinkingOptions<RootStackParamList> = {
   },
 };
 
-export default linking;
+export const LoginLinking: LinkingOptions<LoginStackParamList> = {
+  prefixes: [Linking.makeUrl('/')],
+  config: {
+    screens: {
+      SignIn: "SignIn",
+      SignUp: "SignUp"
+    }
+  },
+};
+
+

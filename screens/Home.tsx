@@ -1,13 +1,12 @@
 import react, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { StyleSheet, Text, View} from 'react-native';
-import { RootTabScreenProps } from '../types';
 import ListView from "@/components/ListView"
 import RideItem from "@/components/RideView"
 import { RidesServices } from '@/services/api/Rides';
 import { useIsFocused } from '@react-navigation/native';
 
-export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
+export default function HomeScreen({ navigation }: any) {
 
   const { user } = useSelector((state: any)=>state.main)
   const [ loadTry, setLoadTry ] = useState(0)

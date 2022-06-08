@@ -5,14 +5,13 @@ import { LoginServices } from '@/services/api/Login';
 import { setUser } from '@/store/reducers/main';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Platform, StyleSheet, Button } from 'react-native';
+import { Platform, StyleSheet, Button, View, Text, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, View  } from '../components/Themed';
-
+import LogoImage from "@assets/images/icons/logo.png"
 
 const INTIAL_DATA = {
-  phone: "",
-  password: "",
+  phone: "22997836256",
+  password: "123456",
 }
 
 export const ModalScreen:React.FunctionComponent<any> = ({navigation}) => {
@@ -26,37 +25,38 @@ export const ModalScreen:React.FunctionComponent<any> = ({navigation}) => {
 
 
   const submit = () =>{
-
     LoginServices.signin({...inputsState.data})
       .then(LoginServices.verify)
       .then(user=>dispatch(setUser(user)))
-      .then(user=>navigation.navigate("Home"))
-      .catch(LoginServices.logout)
-  
+      .catch(LoginServices.logout) 
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> Login aqui </Text>
+        <Image source={LogoImage} style={{
+            width: 100,
+            height: 100,
+        }}></Image>
 
-          <ControlWrapper label={"Telefone"}>
-                <TextInputControl 
-                    value={inputsState.data.phone}
-                    placeholder={'Telefone'}
-                    keyboardType="numeric"
-                    onChangeText={(v:string)=>onChangeText('phone', v)}
-                />
-          </ControlWrapper>
-
-          <ControlWrapper label={"Senha"}>
+        <ControlWrapper label={"Telefone"}>
               <TextInputControl 
-                  value={inputsState.data.password}
-                  placeholder={'Senha de acesso'}
-                  onChangeText={(v:string)=>onChangeText('password', v)}
+                  value={inputsState.data.phone}
+                  placeholder={'Telefone'}
+                  keyboardType="numeric"
+                  onChangeText={(v:string)=>onChangeText('phone', v)}
               />
-          </ControlWrapper>
+        </ControlWrapper>
+
+        <ControlWrapper label={"Senha"}>
+            <TextInputControl 
+                value={inputsState.data.password}
+                placeholder={'Senha de acesso'}
+                onChangeText={(v:string)=>onChangeText('password', v)}
+            />
+        </ControlWrapper>
   
       <Button title="Entrar" onPress={submit}> </Button>
+      <Button title="Cadastrar-se" onPress={()=>navigation.navigate("SignUp")}> </Button>
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );

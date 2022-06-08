@@ -1,18 +1,25 @@
 import { FlexCenter, FlexRow } from 'components/Themed'
 import React, { useEffect, useState } from 'react'
 import { Text, StyleSheet, View, Button } from "react-native"
+import { useSelector } from 'react-redux'
 
-export namespace RideMuralItem {
+export namespace PassagerItem {
     export type Params = {
         entry?: { data: any, index: number }
         onPress: any
     }
 }
 
-export const PassagerItem: React.FunctionComponent<RideMuralItem.Params> = ({ entry, ...rest }) =>{
+export const PassagerItem: React.FunctionComponent<PassagerItem.Params> = ({ entry, onPress }) =>{
+    const { user } = useSelector((state:any)=>state.main)
     const { data, index }: any = entry;
+
+    const handleChange = () =>{
+        console.log("request here the passage to user: ", user.id)
+    }
+
     return (
-        <View {...rest } style={styles.container} >
+        <View style={styles.container} >
             {
                 data ?
                 <FlexRow>
@@ -22,7 +29,7 @@ export const PassagerItem: React.FunctionComponent<RideMuralItem.Params> = ({ en
                 :
                 <FlexRow>
                     <Text> Vaga </Text>
-                    <Button title="reservar" onPress={()=>{}}/>
+                    <Button title="reservar" onPress={handleChange}/>
                 </FlexRow>
             }
         </View>
