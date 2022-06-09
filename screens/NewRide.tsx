@@ -130,9 +130,3 @@ export default NewRideScreen;
 
 
 
-  /* React.useLayoutEffect(() => {
-      navigation.setOptions({
-        headerRight: () => ( <Button onPress={submit} title="Add" /> ),
-      });
-    }, [navigation]); */
-

@@ -1,6 +1,6 @@
-import react, { useState, useEffect, useCallback } from 'react'
+import react, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import ListView from "@/components/ListView"
 import RideItem from "@/components/RideView"
 import { RidesServices } from '@/services/api/Rides';
@@ -15,20 +15,23 @@ export default function HomeScreen({ navigation }: any) {
 
   const isFocused = useIsFocused();
 
+  useEffect(()=>{ if(isFocused == true){ setLoadTry(0) } },[isFocused]) 
+
   useEffect(()=>{
-    if(isFocused == true){
-      setLoadTry(0)
-      RidesServices.list()
-        .then((r)=>{ 
-          setRides(r.records)
-          setMetaData(r._metadata)
-        })
-        .finally(()=>setLoadTry(1))
-    }
-  },[isFocused]) 
+    if(loadTry > 0) return;
+
+    RidesServices.list({})
+      .then((r)=>{ 
+        setRides(r.records)
+        setMetaData(r._metadata)
+      })
+      .finally(()=>setLoadTry(1))
+
+  },[loadTry])
 
   return (
     <View style={styles.container}>
+      <Button onPress={()=>setLoadTry(0)} title="reload" />
       <ListView isLoading={loadTry==0} item={RideItem} records={rides} onChange={()=>{}}/>
     </View>
   );
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,

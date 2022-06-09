@@ -73,8 +73,7 @@ function BottomTabNavigator({ navigation }: any) {
   }
 
   return (
-    <BottomTab.Navigator 
-      initialRouteName="Home"
+    <BottomTab.Navigator initialRouteName="MyRides"
       screenOptions={{ 
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerRight: () => (

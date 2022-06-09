@@ -30,8 +30,14 @@ export namespace Rides_Services {
 
 export const RidesServices = {
 
-    list: async() =>{
-        const result = await ridesApi.send({ method: "get", url:"/" }) 
+    find: async({ ride_id }: { ride_id: string } ) =>{
+        const result = await ridesApi.send({ method: "get", url:`/${ride_id}` }) 
+        console.log(result)
+        return result.data;
+    },
+
+    list: async({ self }: { self?:boolean } ) =>{
+        const result = await ridesApi.send({ method: "get", url:`/?strict=${self ? 1 : 0}` }) 
         return result.data;
     },
 
@@ -43,6 +49,12 @@ export const RidesServices = {
     requestRide: async (params: {to: string, from: string, ride_id:string })=>{
         const { to, from, ride_id } = params
         await ridesApi.send({ method: "post", url:`/${ride_id}/request`, data: { to, from } }) 
+        return;
+    },
+
+    updateStatus: async (params: {run_id: string, status:string })=>{
+        const { run_id, status } = params
+        await ridesApi.send({ method: "patch", url:`/${run_id}/status`, data: { status } }) 
         return;
     }
 
