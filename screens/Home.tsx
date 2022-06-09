@@ -13,9 +13,9 @@ export default function HomeScreen({ navigation }: any) {
   const [ rides, setRides ] = useState<any[]>([])
   const [ metaData, setMetaData ] = useState(null)
 
-  const isFocused = useIsFocused();
+/*   const isFocused = useIsFocused();
 
-  useEffect(()=>{ if(isFocused == true){ setLoadTry(0) } },[isFocused]) 
+  useEffect(()=>{ if(isFocused == true){ setLoadTry(0) } },[isFocused])  */
 
   useEffect(()=>{
     if(loadTry > 0) return;
